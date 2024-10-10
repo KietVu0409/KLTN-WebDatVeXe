@@ -10,6 +10,7 @@ const createSeat = async (req, res) => {
 				floor: seat.floor,
 				price: seat.price,
 				type: seat.type,
+				status: seat.status,
 				vehicleId,
 			});
 		});

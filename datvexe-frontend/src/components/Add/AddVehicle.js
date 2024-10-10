@@ -103,7 +103,10 @@ export default function AddVehicle(props) {
 					>
 						<Select placeholder="Please select type" name="type" onChange={handleChangeSelect("type")}>
 							<Option value="normal">Xe Thường</Option>
-							<Option value="limouse">Xe Vip Limouse</Option>
+							<Option value="normal-bed">Xe Giường Thường</Option>
+							<Option value="luxury">Xe Giường Luxury</Option>
+							<Option value="limousine">Xe Giường Limousine</Option>
+							<Option value="double">Xe Phòng Đôi Limousine</Option>
 						</Select>
 					</Form.Item>
 				</Col>

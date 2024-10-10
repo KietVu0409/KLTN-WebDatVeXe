@@ -51,7 +51,27 @@ export default function AdminVehicle() {
 		{
 			title: "Loại Xe",
 			render: (text, vehicle) => {
-				return <div>{vehicle.type == "limouse" ? "Xe Limouse Vip" : "Xe Thường"}</div>;
+				let vehicleType;
+    			switch (vehicle.type) {
+        			case "normal":
+            			vehicleType = "Xe Thường";
+            			break;
+        			case "normal-bed":
+            			vehicleType = "Xe Giường Thường";
+            			break;
+        			case "luxury":
+            			vehicleType = "Xe Giường Luxury";
+            			break;
+        			case "limousine":
+            			vehicleType = "Xe Giường Limousine";
+            			break;
+        			case "double":
+            			vehicleType = "Xe Phòng Đôi Limousine";
+            			break;
+        			default:
+            			vehicleType = "Không rõ loại xe";
+    			}
+    			return <div>{vehicleType}</div>;
 			},
 			filters: arrFilterType,
 			onFilter: (value, record) => record.type.startsWith(value),
