@@ -1,0 +1,24 @@
+{
+    "development": {
+      "username": "root",
+      "password": "1234",
+      "database": "test-nestjs",
+      "host": "localhost",
+      "dialect": "mysql"
+    },
+    "test": {
+      "username": "sa",
+      "password": "sapassword",
+      "database": "testDB",
+      "host": "127.0.0.1",
+      "dialect": "mysql"
+    },
+    "production": {
+      "username": "sa",
+      "password": "sapassword",
+      "database": "testDB",
+      "host": "127.0.0.1",
+      "dialect": "mysql"
+    }
+  }
+  
