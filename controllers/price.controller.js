@@ -39,7 +39,13 @@ const getOnePriceHeader = async (req, res) => {
         const result = await PriceHeader.findOne({
             where: {
                 id: req.params.idHeader
-            }
+            },
+            include: [
+                {
+                    model: PriceLine,
+                    as: "priceLine",
+                },
+            ]
         });
 
         res.status(200).send(result);
