@@ -1,4 +1,5 @@
-const {PromotionHeader, PromotionLine, PromotionDetail} = require("../models");
+const { where } = require("sequelize/lib/sequelize");
+const { PromotionHeader, PromotionLine, PromotionDetail } = require("../models");
 
 // header
 const createPromotionHeader = async (req, res) => {
@@ -7,7 +8,7 @@ const createPromotionHeader = async (req, res) => {
 		const newRate = await PromotionHeader.create({
 			...data,
 		});
-		res.status(201).send(newRate);
+		res.status(200).send(newRate);
 	} catch (error) {
 		console.log(error);
 		res.status(500).send(error);
@@ -22,11 +23,11 @@ const updatePromotionHeader = async (req, res) => {
 				...data,
 			},
 			{
-				where: {id: req.params.id},
+				where: { id: req.params.id },
 			}
 		);
 
-		res.status(201).send(newRate);
+		res.status(200).send(newRate);
 	} catch (error) {
 		console.log(error);
 		res.status(500).send(error);
@@ -72,20 +73,150 @@ const getAllPromotionHeader = async (req, res) => {
 
 const deletePromotionHeader = async (req, res) => {
 	try {
-		const newRate = await PromotionHeader.destroy({
-			where: {id: req.params.id},
+		await PromotionHeader.destroy({
+			where: { id: req.params.id },
 		});
 
-		res.status(201).send(newRate);
+		res.status(200).send("ok");
 	} catch (error) {
 		console.log(error);
 		res.status(500).send(error);
 	}
+
+
 };
+
+const createPromotionLine = async (req, res) => {
+	const data = req.body;
+	try {
+		const newRate = await PromotionLine.create({
+			title: data.title,
+			startDate: data.startDate,
+			endDate: data.endDate,
+			status: data.status,
+			description: data.description,
+			promotionHeaderId: data.promotionHeaderId,
+			promotionType: data.promotionType
+		});
+
+		const promotionDetail = await PromotionDetail.create({
+			percentDiscount: data.percentDiscount,
+			quantityTicket: data.quantityTicket,
+			purchaseAmount: data.purchaseAmount,
+			moneyReduced: data.moneyReduced,
+			maximumDiscount: data.maximumDiscount,
+			budget: data.budget,
+			promotionHeaderId: data.promotionHeaderId,
+			promotionLineId: newRate.id,
+			budgetUsed: 0
+		})
+
+		res.status(200).send(promotionDetail);
+	} catch (error) {
+		console.log(error);
+		res.status(500).send(error);
+	}
+
+
+};
+
+const getOnePromotionLine = async (req, res) => {
+	try {
+		const result = await PromotionLine.findOne({
+			where: {
+				id: req.params.id,
+			},
+			include: [
+				{
+					model: PromotionDetail,
+					as: "promotionDetail",
+				},
+			],
+		});
+
+		res.status(200).send(result);
+	} catch (error) {
+		res.status(500).send(error);
+	}
+};
+
+const getAllPromotionLine = async (req, res) => {
+	try {
+
+		const result = await PromotionLine.findAll(
+			{
+				where: { promotionHeaderId: req.params.headerId },
+
+				include: [
+					{
+						model: PromotionDetail,
+						as: "promotionDetail",
+					},
+				],
+			});
+
+		res.status(200).send(result);
+	} catch (error) {
+		res.status(500).send(error);
+	}
+};
+
+
+
+const updatePromotionLine = async (req, res) => {
+	const data = req.body;
+	try {
+		await PromotionLine.update({
+			title: data.title,
+			startDate: data.startDate,
+			endDate: data.endDate,
+			status: data.status,
+			description: data.description,
+		},
+
+			{ where: { id: req.params.id } });
+
+		const promotionDetail = await PromotionDetail.update({
+			percentDiscount: data.percentDiscount,
+			quantityTicket: data.quantityTicket,
+			purchaseAmount: data.purchaseAmount,
+			moneyReduced: data.moneyReduced,
+			maximumDiscount: data.maximumDiscount,
+			budget: data.budget,
+		}, { where: { promotionLineId: req.params.id } })
+
+		res.status(200).send(promotionDetail);
+	} catch (error) {
+		console.log(error);
+		res.status(500).send(error);
+	}
+
+};
+
+const deletePromotionLine = async (req, res) => {
+	try {
+		await PromotionLine.destroy({
+			where: { id: req.params.id },
+		});
+
+		res.status(200).send("ok");
+	} catch (error) {
+		console.log(error);
+		res.status(500).send(error);
+	}
+
+
+};
+
 module.exports = {
 	createPromotionHeader,
 	updatePromotionHeader,
 	getOnePromotionHeader,
 	getAllPromotionHeader,
 	deletePromotionHeader,
+	createPromotionLine,
+	updatePromotionLine,
+	getOnePromotionLine,
+	getAllPromotionLine,
+	deletePromotionLine
 };

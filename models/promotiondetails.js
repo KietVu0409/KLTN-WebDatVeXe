@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
             budget: DataTypes.FLOAT,
             promotionHeaderId: DataTypes.INTEGER,
             promotionLineId: DataTypes.INTEGER,
-            remainingBudget: DataTypes.FLOAT,
+            budgetUsed: DataTypes.FLOAT,
         },
         {
             sequelize,

@@ -1,5 +1,5 @@
 const express = require("express");
-const {createPromotionHeader, getAllPromotionHeader, getOnePromotionHeader, updatePromotionHeader, deletePromotionHeader} = require("../controllers/promotion.controller");
+const { createPromotionHeader, getAllPromotionHeader, getOnePromotionHeader, updatePromotionHeader, deletePromotionHeader, createPromotionLine, updatePromotionLine, getAllPromotionLine, getOnePromotionLine, deletePromotionLine } = require("../controllers/promotion.controller");
 
 const promotionRouter = express.Router();
 
@@ -11,10 +11,10 @@ promotionRouter.put("/header/:id", updatePromotionHeader);
 promotionRouter.delete("/header/:id", deletePromotionHeader);
 
 // //// line
-// promotionRouter.delete("/line/:id", deletePriceLine);
-// promotionRouter.post("/line", createPriceLine);
-// promotionRouter.get("/line", getAllPriceLine);
-// promotionRouter.get("/line/:idLine", getOnePriceLine);
-// promotionRouter.put("/line/:id", updatePriceLine);
+promotionRouter.delete("/line/:id", deletePromotionLine);
+promotionRouter.post("/line", createPromotionLine);
+promotionRouter.get("/line/all/:headerId", getAllPromotionLine);
+promotionRouter.get("/line/:id", getOnePromotionLine);
+promotionRouter.put("/line/:id", updatePromotionLine);
 
-module.exports = {promotionRouter};
+module.exports = { promotionRouter };

@@ -23,7 +23,7 @@ priceRouter.delete("/header/:id", deletePriceHeader);
 //// line
 priceRouter.delete("/line/:id", deletePriceLine);
 priceRouter.post("/line", createPriceLine);
-priceRouter.get("/line", getAllPriceLine);
+priceRouter.get("/line/all/:idHeader", getAllPriceLine);
 priceRouter.get("/line/:idLine", getOnePriceLine);
 priceRouter.put("/line/:id", updatePriceLine);
 

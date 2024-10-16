@@ -6,7 +6,7 @@ const createPriceHeader = async (req, res) => {
         const newRate = await PriceHeader.create({
             ...data,
         });
-        res.status(201).send(newRate);
+        res.status(200).send(newRate);
     } catch (error) {
         console.log(error)
         res.status(500).send(error);
@@ -18,7 +18,7 @@ const createPriceLine = async (req, res) => {
         const newRate = await PriceLine.create({
             ...data,
         });
-        res.status(201).send(newRate);
+        res.status(200).send(newRate);
     } catch (error) {
         res.status(500).send(error);
     }
@@ -71,6 +71,8 @@ const getOnePriceLine = async (req, res) => {
 const getAllPriceLine = async (req, res) => {
     try {
         const RateList = await PriceLine.findAll({
+
+            where: { priceHeaderId: req.params.idHeader },
             include: [
                 {
                     model: Station,
@@ -102,7 +104,7 @@ const updatePriceHeader = async (req, res) => {
                 where: { id: req.params.id }
             });
 
-        res.status(201).send(newRate);
+        res.status(200).send(newRate);
     } catch (error) {
         console.log(error)
         res.status(500).send(error);
@@ -120,7 +122,7 @@ const updatePriceLine = async (req, res) => {
                 where: { id: req.params.id }
             });
 
-        res.status(201).send(newRate);
+        res.status(200).send(newRate);
     } catch (error) {
         console.log(error)
         res.status(500).send(error);
@@ -130,12 +132,12 @@ const updatePriceLine = async (req, res) => {
 
 const deletePriceLine = async (req, res) => {
     try {
-        const newRate = await PriceLine.destroy(
+        await PriceLine.destroy(
             {
                 where: { id: req.params.id }
             });
 
-        res.status(201).send(newRate);
+        res.status(200).send("ok");
     } catch (error) {
         console.log(error)
         res.status(500).send(error);
@@ -145,12 +147,12 @@ const deletePriceLine = async (req, res) => {
 
 const deletePriceHeader = async (req, res) => {
     try {
-        const newRate = await PriceHeader.destroy(
+        await PriceHeader.destroy(
             {
                 where: { id: req.params.id }
             });
 
-        res.status(201).send(newRate);
+        res.status(200).send("ok");
     } catch (error) {
         console.log(error)
         res.status(500).send(error);
