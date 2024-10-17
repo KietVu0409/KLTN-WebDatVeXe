@@ -147,8 +147,9 @@ const getAllPromotionLine = async (req, res) => {
 				},
 			],
 		});
+		console.log(result);
 
-		res.status(200).send(result.lenght > 0 ? result : []);
+		res.status(200).send(result.length > 0 ? result : []);
 	} catch (error) {
 		res.status(500).send(error);
 	}
