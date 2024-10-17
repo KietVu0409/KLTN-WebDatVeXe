@@ -1,3 +1,4 @@
+const { Op } = require("sequelize/lib/sequelize");
 const { PriceHeader, PriceLine, Station } = require("../models");
 
 const createPriceHeader = async (req, res) => {
@@ -57,9 +58,17 @@ const getOnePriceHeader = async (req, res) => {
 const getOnePriceLine = async (req, res) => {
     try {
         const result = await PriceLine.findOne({
-            where: {
-                id: req.params.idLine
-            }
+            where: { id: req.params.idLine },
+            include: [
+                {
+                    model: Station,
+                    as: "fromStationFK",
+                },
+                {
+                    model: Station,
+                    as: "toStationFK",
+                },
+            ],
         });
 
         res.status(200).send(result);
@@ -96,6 +105,25 @@ const getAllPriceLine = async (req, res) => {
 const updatePriceHeader = async (req, res) => {
     const data = req.body;
     try {
+
+        if (req.body.status) {
+            const price = await PriceHeader.findOne({
+                where: { id: req.params.id }
+            })
+
+            const priceHeaders = await PriceHeader.findAll({
+                where: {
+                    endDate: { [Op.gte]: new Date(price.startDate) },
+                    status: true,
+                    id: { [Op.notIn]: [req.params.id] }
+                }
+            })
+
+            if (priceHeaders.length > 0) {
+                return res.status(400).send({ message: "Can not update status" })
+            }
+        }
+
         const newRate = await PriceHeader.update(
             {
                 ...data,

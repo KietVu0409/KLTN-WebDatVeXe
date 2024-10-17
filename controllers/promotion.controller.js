@@ -1,6 +1,5 @@
-const { where } = require("sequelize/lib/sequelize");
-const { PromotionHeader, PromotionLine, PromotionDetail } = require("../models");
-
+const { PromotionHeader, PromotionLine, PromotionDetail, Trip } = require("../models");
+const { Op, where } = require("sequelize");
 // header
 const createPromotionHeader = async (req, res) => {
 	const data = req.body;
@@ -204,7 +203,70 @@ const deletePromotionLine = async (req, res) => {
 		console.log(error);
 		res.status(500).send(error);
 	}
+};
 
+const getPromotionByTripId = async (req, res) => {
+	try {
+		var array = []
+		const trip = await Trip.findOne({
+			where: { id: req.params.tripId },
+		});
+
+		if (!trip) {
+			return res.status(200).send({ data: array });
+		}
+
+		const promotionHeader = await PromotionHeader.findOne({
+			where: {
+				startDate: { [Op.lte]: new Date(trip.startTime) },
+				endDate: { [Op.gte]: new Date(trip.startTime) },
+				status: true
+			}
+		})
+
+		if (!promotionHeader) {
+			return res.status(200).send({ data: array });
+		}
+
+		array = await PromotionLine.findAll({
+			where: {
+				startDate: { [Op.lte]: new Date(trip.startTime) },
+				endDate: { [Op.gte]: new Date(trip.startTime) },
+				status: true,
+				promotionHeaderId: promotionHeader.id
+			},
+			include: [
+				{
+					model: PromotionDetail,
+					as: "promotionDetail",
+				}
+			]
+		})
+
+		return res.status(200).send({ data: array });
+	} catch (error) {
+		console.log(error);
+		res.status(500).send(error);
+	}
+};
+
+const updateBugetPromotionLine = async (req, res) => {
+	const data = req.body;
+	try {
+
+		const promotionFind = await PromotionDetail.findOne({
+			where: { promotionLineId: req.params.id }
+		})
+
+		const promotionDetail = await PromotionDetail.update({
+			budgetUsed: Number(promotionFind?.budgetUsed) + Number(data.budgetUsed),
+		}, { where: { promotionLineId: req.params.id } })
+
+		res.status(200).send(promotionDetail);
+	} catch (error) {
+		console.log(error);
+		res.status(500).send(error);
+	}
 
 };
 
@@ -218,5 +280,7 @@ module.exports = {
 	updatePromotionLine,
 	getOnePromotionLine,
 	getAllPromotionLine,
-	deletePromotionLine
+	deletePromotionLine,
+	getPromotionByTripId,
+	updateBugetPromotionLine
 };
