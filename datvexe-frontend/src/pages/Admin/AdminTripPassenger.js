@@ -158,7 +158,7 @@ export default function AdminTripPassenger(props) {
 								dispatch({
 									type: SET_MODAL,
 									title: `Sơ Đồ Xe ${trip.vehicle.name}`,
-									content: <Vehicle vehicle={trip.vehicle} />,
+									content: <Vehicle vehicle={trip.vehicle} price={trip.tripPrice} />,
 								});
 							}}
 						>
@@ -173,8 +173,8 @@ export default function AdminTripPassenger(props) {
 
 			// specify the condition of filtering result
 			// here is that finding the name started with `value`
-			render: (text, trip) => {
-				return <div> {trip.passenger.price} VNĐ</div>;
+			render: (text, item) => {
+				return <div> {item.tripPrice} VNĐ</div>;
 			},
 			defaultSortOrder: "descend",
 			sorter: (a, b) => a.passenger.price - b.passenger.price,

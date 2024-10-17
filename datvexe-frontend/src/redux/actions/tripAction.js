@@ -102,11 +102,12 @@ export const getTripPassengerAction = (tripId) => {
 	return async (dispatch) => {
 		try {
 			const result = await tripService.getTripPassenger(tripId);
-			console.log(result);
+
 			if (result.status == 200) {
 				const dataNew = result.data.map((item, index) => {
-					return {...item, openDetail: false, openBooking: false, isOpen: false};
+					return {...item.tripPassenger, tripPrice: item.priceTrip, openDetail: false, openBooking: false, isOpen: false};
 				});
+				console.log(dataNew);
 				dispatch({
 					type: GET_TRIP_PASSENGER,
 					listTripPassenger: dataNew,

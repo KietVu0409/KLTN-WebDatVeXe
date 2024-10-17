@@ -26,7 +26,7 @@ export default function (props) {
 			let arrClass = [classDaDat, classDangDat];
 			if (item.floor === floors) {
 				return (
-					<Tooltip title={`Ghế: ${item.name}, Giá: ${item.price.toLocaleString()} VNĐ`} placement="top">
+					<Tooltip title={`Ghế: ${item.name}, Giá: ${props.price.toLocaleString()} VNĐ`} placement="top">
 						<button className="seat" style={{border: "none"}} key={index} disabled={disabled}>
 							<div className="seat-container">
 								<Seat arrClass={arrClass} />
