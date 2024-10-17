@@ -17,12 +17,12 @@ const {Option} = Select;
 function AddTripProvince(props) {
 	const dispatch = useDispatch();
 	const {listStation} = useSelector((state) => state.StationReducer);
-	console.log("listStation", listStation);
 	const {prev, next, current, setCurrent} = props;
+
 	function disabledDate(current) {
-		// Can not select days before today and today
 		return current && current.valueOf() < Date.now() + 1;
 	}
+
 	const onFinish = (values) => {
 		const {fromStation, toStation, startTime} = values;
 		if (fromStation == toStation) {
@@ -38,9 +38,11 @@ function AddTripProvince(props) {
 			next();
 		}
 	};
+	
 	useEffect(() => {
 		dispatch(getListStationAction());
 	}, []);
+
 	const renderStation = () => {
 		return listStation.map((item, index) => {
 			return {label: `${item.name}-${item.province}`, value: item.id};

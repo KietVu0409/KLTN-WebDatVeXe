@@ -22,12 +22,16 @@ import AdminTrip from "./pages/Admin/AdminTrip";
 import AdminUser from "./pages/Admin/AdminUser";
 import AdminPassenger from "./pages/Admin/AdminPassenger";
 import AdminStation from "./pages/Admin/AdminStation";
+import AdminPriceHeader from "./pages/Admin/AdminPriceHeader";
+import AdminPrice from "./pages/Admin/AdminPrice";
 
 import AdminTripPassenger from "./pages/Admin/AdminTripPassenger";
 import DrawerForm from "./components/Drawer/DrawerForm";
 import AdminTurnOver from "./pages/Admin/AdminTurnOver/AdminTurnOver";
 import AddTrip from "./components/Add/AddTrip";
 import MapPoint from "./components/Map/MapPoint";
+import AdminPromotionHeader from "./pages/Admin/AdminPromotionHeader";
+import AdminPromotionLine from "./pages/Admin/AdminPromotionLine";
 
 export const history = createBrowserHistory();
 
@@ -41,6 +45,10 @@ function App() {
 			<Switch>
 				<Payment path="/payment" exact />
 				<AdminTemplate path="/admin/ticket" exact Component={AdminTicket} />
+				<AdminTemplate path="/admin/prices" exact Component={AdminPriceHeader} />
+				<AdminTemplate path="/admin/prices/:id" exact Component={AdminPrice} />
+				<AdminTemplate path="/admin/promotion" exact Component={AdminPromotionHeader} />
+				<AdminTemplate path="/admin/promotion/:id" exact Component={AdminPromotionLine} />
 				<AdminTemplate path="/admin/vehicle" exact Component={AdminVehicle} />
 				<AdminTemplate path="/admin/trip" exact Component={AdminTrip} />
 				<AdminTemplate path="/admin/station" exact Component={AdminStation} />

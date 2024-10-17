@@ -14,6 +14,9 @@ import CommentReducer from "./reducers/CommentReducer";
 import timePointReducer from "./reducers/timePointReducer";
 import StationReducer from "./reducers/StationReducer";
 import PointReducer from "./reducers/PointReducer";
+import priceHeaderReducer from "./reducers/PriceHeaderReducer";
+import priceLineReducer from "./reducers/PriceLineReducer";
+import promotionHeader from "./reducers/PromotionHeader";
 
 const rootReducer = combineReducers({
 	BookingReducer,
@@ -30,6 +33,9 @@ const rootReducer = combineReducers({
 	timePointReducer,
 	StationReducer,
 	PointReducer,
+	priceHeaderReducer,
+	priceLineReducer,
+	promotionHeader
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));

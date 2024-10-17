@@ -78,6 +78,32 @@ export default function AdminTemplate(props) {
 										Quản Lý Chuyến Xe
 									</Menu.Item>
 									<Menu.Item
+										key="10"
+										icon={<DepartureBoardIcon />}
+										onClick={() => {
+											history.push("/admin/prices");
+											dispatch({
+												type: CHANGE_KEY,
+												key: "10",
+											});
+										}}
+									>
+										Quản Lý Giá
+									</Menu.Item>
+									<Menu.Item
+										key="11"
+										icon={<DepartureBoardIcon />}
+										onClick={() => {
+											history.push("/admin/promotion");
+											dispatch({
+												type: CHANGE_KEY,
+												key: "11",
+											});
+										}}
+									>
+										Quản Lý Khuyến Mãi
+									</Menu.Item>
+									<Menu.Item
 										key="3"
 										icon={<DirectionsTransitIcon />}
 										onClick={() => {
