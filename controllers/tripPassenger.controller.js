@@ -202,7 +202,7 @@ const getAllTripPassenger = async (req, res) => {
 						fromStation: tripPassenger.trip.fromStation,
 						toStation: tripPassenger.trip.toStation,
 						priceHeaderId: priceHeader.id,
-						typeSeat: tripPassenger.vehicle.seatVehicle[0].type
+						typeSeat: tripPassenger.vehicle.type
 					}
 				})
 
